@@ -1,0 +1,47 @@
+.app-bg{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+  background-image:
+ linear-gradient(to bottom, rgba(245, 246, 252, 0.52), rgba(5, 6, 8, 0.73)),
+ var(--img);
+  background-size: cover;
+  background-position: center;
+}
+
+.ant-checkbox-inner {
+  background-color: hotpink;
+  border-radius: 50%;
+}
+
+.checkBox input[type='checkbox'] {
+  appearance: none;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  border: 1px solid #000;
+  margin-right: 10px;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 5px; /* Width of the scrollbar */
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f198; /* Color of the track */
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; /* Color of the scrollbar handle */
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Color of the scrollbar handle on hover */
+}

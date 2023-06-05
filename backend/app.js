@@ -15,17 +15,16 @@ var apiRouter = require('./routes/api');
 
 var app = express();
 
-// const corsOptions = {
-//     //multiple origins
-//     origin: "http://localhost:5173",
-//     methods: ['POST', 'PUT', 'GET', 'OPTIONS', 'HEAD', 'DELETE', 'PATCH'],
-//     optionsSuccessStatus: 200,
-//     credentials: true,
-// }
-// app.use(cors(corsOptions))
+const corsOptions = {
+    //multiple origins
+    origin: "http://localhost:5173",
+    methods: ['POST', 'PUT', 'GET', 'OPTIONS', 'HEAD', 'DELETE', 'PATCH'],
+    optionsSuccessStatus: 200,
+}
+app.use(cors(corsOptions))
 app.use(express.json({limit: '100mb'}));
 app.use(express.urlencoded({limit: '100mb'}));
-app.options(cors());
+// app.options(cors());
 app.use(helmet()); // Helmet helps you secure your Express apps by setting various HTTP headers. It's not a silver bullet, but it can help!
 app.use(logger('dev'));
 
@@ -43,15 +42,6 @@ app.use(cookieParser());
 // app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(mongoSanitize()); // Data sanitization against NoSQL query injection
-
-app.use(
-session({
-    secret: '67d3dafef63ff00603aeef3769cfbf0d',
-    resave: true,
-    saveUninitialized: true,
-    store: MongoStore.create({ mongoUrl: process.env.MONGOURI, ttl: 60 * 60 * 24, autoRemove: 'native' }),
-    })
-);
 
 //calling the routers
 app.use('/api', apiRouter);

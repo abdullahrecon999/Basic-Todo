@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  frontend:
+    build: ./frontend/todoapp
+    container_name: todo-frontend-container
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend/todoapp:/app
+      - ./app/node_modules
+    networks:
+      - todoapp-network
+    depends_on:
+      - backend
+  backend:
+    build: ./backend
+    container_name: todo-backend-container
+    ports:
+      - "3000:3000"
+    environment:
+      - MONGOURI=mongodb://mongo:27017/todoapp
+    volumes:
+      - ./backend/todoapp:/app
+      - ./app/node_modules
+    networks:
+      - todoapp-network
+
+networks:
+  todoapp-network:
+    driver: bridge

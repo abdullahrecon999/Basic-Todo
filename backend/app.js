@@ -7,8 +7,7 @@ const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
 const cors = require('cors');
-const session = require('express-session');
-const MongoStore = require('connect-mongo');
+const mongoose = require('mongoose');
 
 // importing the router
 var apiRouter = require('./routes/api');

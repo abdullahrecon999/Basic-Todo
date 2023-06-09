@@ -4,7 +4,7 @@ const Task = require('../model/task');
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {
-    res.send('Api Router called');
+    res.send({"data":'Api Router called'});
 });
 
 // Route: GET /getTasks

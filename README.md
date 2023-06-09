@@ -4,16 +4,17 @@ A simple task management application built with React and Node.js.
 
 ## Table of Contents
 
-- [Introduction](#introduction)
-- [Features](#features)
-- [Technologies](#technologies)
-- [Getting Started](#getting-started)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Backend](#backend)
-- [Frontend](#frontend)
-- [Contributing](#contributing)
-- [License](#license)
+- [Task Manager App](#task-manager-app)
+  - [Table of Contents](#table-of-contents)
+  - [Introduction](#introduction)
+  - [Features](#features)
+  - [Technologies](#technologies)
+  - [Getting Started](#getting-started)
+    - [Installation](#installation)
+    - [Usage](#usage)
+  - [Tests](#tests)
+  - [Backend](#backend)
+  - [Frontend](#frontend)
 
 ## Introduction
 
@@ -95,6 +96,26 @@ To get started with the Task Manager App, follow these steps:
    This will start the backend server on `http://localhost:3000`.
 
 3. Open your web browser and visit `http://localhost:5173` to access the Task Manager App.
+
+## Tests
+To run the tests, follow these steps:
+1. Add .env file with the following:
+   
+   ```
+   MONGOURI=mongodb://
+   MONGOURI_TEST=mongodb://
+   ```
+
+2. Navigate to the project directory:
+
+   ```shell
+   cd Basic-Todo/backend
+   ```
+3. Run the tests:
+
+   ```shell
+   npm test
+   ```
 
 ## Backend
 

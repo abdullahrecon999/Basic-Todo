@@ -2,7 +2,7 @@ require('dotenv').config()
 const mongoose = require('mongoose');
 const app = require('./app');
 
-const DB = process.env.MONGOURI;
+const DB = process.env.MONGOURI || 'mongodb://127.0.0.1:27017/todo';
 
 mongoose.connect(DB, {
     useNewUrlParser: true,

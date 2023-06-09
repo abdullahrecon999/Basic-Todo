@@ -52,19 +52,19 @@ To get started with the Task Manager App, follow these steps:
 1. Clone the repository:
 
    ```shell
-   git clone https://github.com/your-username/task-manager-app.git
+   git clone https://github.com/abdullahrecon999/Basic-Todo
    ```
 
 2. Navigate to the project directory:
 
    ```shell
-   cd task-manager-app
+   cd Basic-Todo
    ```
 
 3. Install the dependencies for the frontend:
 
    ```shell
-   cd frontend
+   cd frontend/todoapp
    npm install
    ```
 
@@ -81,16 +81,16 @@ To get started with the Task Manager App, follow these steps:
 
    ```shell
    cd frontend
-   npm start
+   npm run dev
    ```
 
-   This will start the frontend app on `http://localhost:3000`.
+   This will start the frontend app on `http://localhost:5173`.
 
 2. Start the backend server:
 
    ```shell
    cd backend
-   npm start
+   npm run dev
    ```
 
    This will start the backend server on `http://localhost:3000`.
@@ -99,7 +99,7 @@ To get started with the Task Manager App, follow these steps:
 
 ## Tests
 To run the tests, follow these steps:
-1. Add .env file with the following:
+1. Add .env file with the following (Check the example.env file):
    
    ```
    MONGOURI=mongodb://

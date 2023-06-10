@@ -6,9 +6,11 @@ services:
     container_name: todo-frontend-container
     ports:
       - "5173:5173"
+    environment:
+      - VITE_BASE_URL=http://localhost:3000/api/v1
     volumes:
       - ./frontend/todoapp:/app
-      - ./app/node_modules
+      - /app/node_modules
     networks:
       - todoapp-network
     depends_on:
@@ -21,8 +23,8 @@ services:
     environment:
       - MONGOURI=mongodb://mongo:27017/todoapp
     volumes:
-      - ./backend/todoapp:/app
-      - ./app/node_modules
+      - ./backend:/app
+      - /app/node_modules
     networks:
       - todoapp-network
 

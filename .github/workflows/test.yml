@@ -22,7 +22,7 @@ jobs:
         with:
           node-version: 18
 
-      - name: Install backedn packages
+      - name: Install backend packages
         working-directory: backend
         run: npm ci
 

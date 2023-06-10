@@ -14,6 +14,7 @@ A simple task management application built with React and Node.js.
   - [Getting Started](#getting-started)
     - [Installation](#installation)
     - [Usage](#usage)
+    - [Docker](#docker)
   - [Tests](#tests)
   - [Backend](#backend)
   - [Frontend](#frontend)
@@ -44,6 +45,14 @@ The Task Manager App is built using the following technologies:
   - Node.js: JavaScript runtime for server-side development.
   - Express.js: Web application framework for Node.js.
   - MongoDB: NoSQL database for storing task data.
+  - Jest: Testing framework for Node.js.
+
+- Deployment:
+  - Docker: Containerization platform for packaging the app.
+  - Docker Compose: Tool for defining and running multi-container Docker applications.
+
+- GitHub Actions:
+  - CI/CD pipeline for running tests and deploying the app.
 
 ## Getting Started
 
@@ -79,7 +88,20 @@ To get started with the Task Manager App, follow these steps:
 
 ### Usage
 
-1. Start the frontend development server:
+1. Add the .env file in the backend directory with the following (Check the example.env file):
+
+   ```
+   MONGOURI=mongodb://
+   MONOGOURI_TEST=mongodb://
+   ```
+
+3. Add the .env file in the frontend/todoapp directory with the following (Check the example.env file):
+
+   ```
+   VITE_BASE_URL=http://localhost:3000/api/v1
+   ```
+
+4. Start the frontend development server:
 
    ```shell
    cd frontend
@@ -88,7 +110,7 @@ To get started with the Task Manager App, follow these steps:
 
    This will start the frontend app on `http://localhost:5173`.
 
-2. Start the backend server:
+5. Start the backend server:
 
    ```shell
    cd backend
@@ -97,7 +119,35 @@ To get started with the Task Manager App, follow these steps:
 
    This will start the backend server on `http://localhost:3000`.
 
-3. Open your web browser and visit `http://localhost:5173` to access the Task Manager App.
+6. Open your web browser and visit `http://localhost:5173` to access the Task Manager App.
+
+## Docker
+
+To run the Task Manager App using Docker, follow these steps:
+
+1. Clone the repository:
+
+   ```shell
+   git clone
+   ```
+2. Navigate to the project directory:
+
+   ```shell
+   cd Basic-Todo
+   ```
+3. Add your MONGO_URI in docker-compose.yml file:
+   ```
+   environment:
+      - MONGOURI=<MONGO URI String>
+   ```
+
+4. Docker-Compose:
+
+   ```shell
+   docker-compose up
+   ```
+
+4. This will start the frontend app on `http://localhost:5173` and backend server on `http://localhost:3000`.
 
 ## Tests
 To run the tests, follow these steps:

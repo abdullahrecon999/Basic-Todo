@@ -30,7 +30,6 @@ export const deleteTask = async (id) => {
 export const getTasks = async () => {
   try {
     const response = await apiService.get('/tasks');
-    console.log(response.data);
     return response;
   } catch (error) {
     console.log(error);

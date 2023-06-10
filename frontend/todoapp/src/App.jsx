@@ -1,10 +1,10 @@
 import { useState } from 'react'
-import { Checkbox, Dropdown, Spin, message, Input, Button, Avatar } from 'antd';
-import { DeleteOutlined } from '@ant-design/icons';
-import { ReactSortable } from "react-sortablejs";
+import { Spin, message } from 'antd';
 import { useQuery } from 'react-query';
 import { createTask, deleteTask, getTasks, uncheckTask, checkTask } from './services/apiService';
-import { PopoverComponent } from './components/popover';
+import { AvatarComponent } from './components/Avatar';
+import { InputBox } from './components/InputBox';
+import TaskList from './components/TaskList';
 import './App.css'
 
 function App() {
@@ -22,7 +22,6 @@ function App() {
 			messageApi.error("Task title cannot be empty");
 			return;
 		}
-		console.log("Task Title: ", taskTitle);
 		try {
 			const response = await createTask(taskTitle);
 			setData([...data, response.data]);
@@ -31,11 +30,9 @@ function App() {
 			console.log(error);
 			throw new Error("Error while adding task");
 		}
-		// setData([...data, { id: "10", text: taskTitle }]);
 	};
 
 	const handleDelete = async (id) => {
-		console.log("Delete Task: ", id);
 		try {
 			await deleteTask(id);
 			messageApi.success("Task deleted successfully");
@@ -44,13 +41,11 @@ function App() {
 			console.log(error);
 			throw new Error("Error while deleting task");
 		}
-		// setData(data.filter((item) => item.id !== id));
 	};
 
 	const { data: todos, isLoading, isError, isSuccess } = useQuery('todos', async () => {
 		try {
 			const response = await getTasks();
-			console.log("RESPONSE: ", response.data)
 			setData(response.data);
 			return response.data;
 		} catch (error) {
@@ -61,8 +56,6 @@ function App() {
 
 	const handleCheckboxChange = async (id, status) => {
 		// Handle checkbox change logic
-		console.log("Checkbox Change: ", id);
-
 		try {
 			if (status === "checked") {
 				await uncheckTask(id);
@@ -71,7 +64,6 @@ function App() {
 			}
 
 			messageApi.success("Task updated successfully");
-
 			setData((prevData) =>
 				prevData.map((item) => {
 					if (item._id === id) {
@@ -103,24 +95,10 @@ function App() {
 		<div className="app-bg">
 			{contextHolder}
 			<div className='container'>
-				<Avatar className="avatar" size={80} icon={<img src="https://media.istockphoto.com/id/1300512215/photo/headshot-portrait-of-smiling-ethnic-businessman-in-office.jpg?s=612x612&w=0&k=20&c=QjebAlXBgee05B3rcLDAtOaMtmdLjtZ5Yg9IJoiy-VY=" />} />
+				<AvatarComponent size={80} />
 
 				<div className="task-container">
-					<div className="input-container">
-						<Input
-							value={taskTitle}
-							onChange={handleTaskTitleChange}
-							onKeyDown={(e) => {
-								if (e.key === 'Enter') {
-									handleSubmit();
-								}
-							}}
-							className="task-input"
-							placeholder="Enter Task"
-						/>
-						<Button onClick={handleSubmit} className="add-button" type="primary">Add</Button>
-					</div>
-
+					<InputBox handleSubmit={handleSubmit} handleTaskTitleChange={handleTaskTitleChange} taskTitle={taskTitle} />
 					{
 						isLoading ? (
 							<div className="loading-container">
@@ -134,54 +112,14 @@ function App() {
 							) : (
 								isSuccess && (
 									<div className="tasks-list">
-										<ReactSortable
-											list={data}
-											setList={setData}
-											animation={200}
-											easing="ease-out"
-											scroll={true}
-											scrollSpeed={20}
-											scrollSensitivity={100}
-										>
-											{data.map((item, index) => (
-												<PopoverComponent creationTime={item.createdAt} completedTime={item.checkedAt} placement='left' key={item._id}>
-													<Dropdown
-														key={item._id}
-														menu={{
-															items: [
-																{
-																	key: '1',
-																	label: 'Delete',
-																	icon: <DeleteOutlined />,
-																	danger: true,
-																	onClick: () => handleDelete(item._id)
-																},
-															]
-														}}
-														trigger={['contextMenu']}
-														visible={activeMenuId === item._id}
-														onVisibleChange={(visible) => handleDropdownVisibleChange(visible, item._id)}
-													>
-														<div key={item._id} className="task-item">
-															<div className="task-details">
-																<div className='task-container2'>
-																	<Checkbox
-																		checked={item.status == 'checked'}
-																		className='checkBox'
-																		style={{ marginRight: '10px' }}
-																		onChange={() => handleCheckboxChange(item._id, item.status)}
-																	/>
-																	<span className="task-title">{item.title}</span>
-																</div>
-																<div className="drag-icon">
-																	<svg height="18" width="18" viewBox="0 0 24 24"><path d="M11 18c0 1.1-.9 2-2 2s-2-.9-2-2s.9-2 2-2s2 .9 2 2zm-2-8c-1.1 0-2 .9-2 2s.9 2 2 2s2-.9 2-2s-.9-2-2-2zm0-6c-1.1 0-2 .9-2 2s.9 2 2 2s2-.9 2-2s-.9-2-2-2zm6 4c1.1 0 2-.9 2-2s-.9-2-2-2s-2 .9-2 2s.9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2s2-.9 2-2s-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2s2-.9 2-2s-.9-2-2-2z" fill="currentColor"></path></svg>
-																</div>
-															</div>
-														</div>
-													</Dropdown>
-												</PopoverComponent>
-											))}
-										</ReactSortable>
+										<TaskList
+											data={data}
+											setData={setData}
+											handleCheckboxChange={handleCheckboxChange}
+											handleDelete={handleDelete}
+											activeMenuId={activeMenuId}
+											handleDropdownVisibleChange={handleDropdownVisibleChange}
+										/>
 									</div>
 								)
 							)

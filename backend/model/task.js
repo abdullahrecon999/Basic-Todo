@@ -12,7 +12,7 @@ const taskSchema = new mongoose.Schema({
     },
     checkedAt: {
         type: Date,
-        default: null
+        default: null,
     },
 }, { timestamps: true });
 

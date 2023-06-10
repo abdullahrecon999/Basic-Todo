@@ -13,11 +13,6 @@
   background-position: center;
 }
 
-.ant-checkbox-inner {
-  background-color: hotpink;
-  border-radius: 50%;
-}
-
 .checkBox input[type='checkbox'] {
   appearance: none;
   border-radius: 50%;
@@ -46,8 +41,6 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #555; /* Color of the scrollbar handle on hover */
 }
-
-
 
 .container {
   width: 400px;
@@ -145,10 +138,6 @@
 
 .check-box {
   margin-right: 10px;
-}
-
-svg {
-  fill: #1a120b;
 }
 
 .dropdown .rc-dropdown-menu {

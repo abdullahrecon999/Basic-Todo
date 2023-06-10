@@ -11,7 +11,11 @@ export const PopoverComponent = ({creationTime, completedTime, placement, childr
 			</p>
 			<p>
 				<span className="popover-bold">Completed at:</span>{' '}
-				{convertTimezone(completedTime, 'Asia/karachi')}
+				{
+                    (completedTime !== null) ?
+                    convertTimezone(completedTime, 'Asia/karachi') :
+                    'Not Completed'
+                }
 			</p>
 		</div>
 	);

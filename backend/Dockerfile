@@ -8,5 +8,6 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm install
 COPY . .
+ENV MONGOURI=mongodb://mongo:27017/todo
 EXPOSE 3000
 CMD [ "npm", "start" ]

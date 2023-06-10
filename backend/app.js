@@ -1,5 +1,4 @@
 var express = require('express');
-var path = require('path');
 var logger = require('morgan');
 require('dotenv').config()
 const helmet = require('helmet');

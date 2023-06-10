@@ -30,7 +30,7 @@ describe('Server status test', () => {
     const res = await request(app)
       .get(BASE_URL+'/abc')
       .expect(404);
-    expect(res.body).toEqual({ Error: `Cant Find ${BASE_URL}/abc` });
+    expect(res.body).toEqual({ Error: `Cant Find ${BASE_URL}/abcs` });
   });
 });
 

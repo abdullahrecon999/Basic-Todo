@@ -1,3 +1,5 @@
+[![Backend Tests](https://github.com/abdullahrecon999/Basic-Todo/actions/workflows/test.yml/badge.svg)](https://github.com/abdullahrecon999/Basic-Todo/actions/workflows/test.yml)
+
 # Task Manager App
 
 A simple task management application built with React and Node.js.

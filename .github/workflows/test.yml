@@ -1,0 +1,31 @@
+name: Backend Tests
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  test:
+    name: Run Unit Tests
+    runs-on: ubuntu-latest
+
+    env:
+      MONGOURI_TEST: ${{ secrets.MONGOURI_TEST }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 18
+
+      - name: Install backedn packages
+        working-directory: backend
+        run: npm ci
+
+      - name: Run backend tests
+        working-directory: backend
+        run: npm test

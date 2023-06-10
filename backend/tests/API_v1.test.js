@@ -3,6 +3,7 @@ const app = require('../app')
 const Task = require('../model/task')
 const mongoose = require('mongoose')
 const testDB = process.env.MONGOURI_TEST
+const BASE_URL = '/api/v1'
 
 beforeAll(async () => {
   await mongoose.connect(testDB, {
@@ -20,27 +21,27 @@ afterAll(async () => {
 describe('Server status test', () => {
   it('should return simple 200', async () => {
     const res = await request(app)
-      .get('/api')
+      .get(BASE_URL)
       .expect(200);
     expect(res.body).toEqual({ data: 'Api Router called' });
   });
 
   it('should return 404', async () => {
     const res = await request(app)
-      .get('/api/abc')
+      .get(BASE_URL+'/abc')
       .expect(404);
-    expect(res.body).toEqual({ Error: 'Cant Find /api/abc' });
+    expect(res.body).toEqual({ Error: `Cant Find ${BASE_URL}/abc` });
   });
 });
 
-describe('Get /getTasks', () => {
+describe('Get /tasks', () => {
   // jest.setTimeout(300000);
   it('should return all tasks with status 200', async () => {
     const task = new Task({ title: 'Task 1' });
     await task.save();
 
     const res = await request(app)
-      .get('/api/getTasks')
+      .get(BASE_URL+'/tasks')
       .expect(200);
 
     expect(res.body.some((taskObj) => taskObj._id === task._id.toString())).toBe(true);
@@ -50,14 +51,14 @@ describe('Get /getTasks', () => {
 
   it('should return an error with status 404 if no tasks are found', async () => {
     const res = await request(app)
-      .get('/api/getTasks')
+      .get(BASE_URL+'/tasks')
       .expect(404);
 
     expect(res.body).toEqual({ error: 'Tasks not found' });
   });
 });
 
-describe('POST /api/createTask', () => {
+describe('POST /tasks', () => {
   afterEach(async () => {
     await Task.deleteMany();
   });
@@ -66,7 +67,7 @@ describe('POST /api/createTask', () => {
     const taskData = { title: 'Task 1' };
 
     const res = await request(app)
-      .post('/api/createTask')
+      .post(BASE_URL+'/tasks')
       .send(taskData)
       .expect(200);
 
@@ -82,7 +83,7 @@ describe('POST /api/createTask', () => {
     const taskData = {};
 
     const res = await request(app)
-      .post('/api/createTask')
+      .post(BASE_URL+'/tasks')
       .send(taskData)
       .expect(500);
 
@@ -90,7 +91,7 @@ describe('POST /api/createTask', () => {
   });
 });
 
-describe('DELETE /api/delTask/:id', () => {
+describe(`DELETE ${BASE_URL}/tasks/:id`, () => {
   afterEach(async () => {
     await Task.deleteMany();
   });
@@ -99,7 +100,7 @@ describe('DELETE /api/delTask/:id', () => {
     const task = await Task.create({ title: 'Task 1' });
 
     const res = await request(app)
-      .delete(`/api/delTask/${task._id}`)
+      .delete(BASE_URL+`/tasks/${task._id}`)
       .expect(200);
 
     expect(res.body).toEqual({ message: 'Task deleted' });
@@ -112,14 +113,14 @@ describe('DELETE /api/delTask/:id', () => {
     const invalidTaskId = 'invalid_id';
 
     const res = await request(app)
-      .delete(`/api/delTask/${invalidTaskId}`)
+      .delete(BASE_URL+`/tasks/${invalidTaskId}`)
       .expect(500);
 
     expect(res.body).toEqual({ error: 'Failed to delete task' });
   });
 });
 
-describe('PATCH /api/checkTask/:id', () => {
+describe(`PATCH ${BASE_URL}/tasks/:id/check`, () => {
   afterEach(async () => {
     await Task.deleteMany();
   });
@@ -128,7 +129,7 @@ describe('PATCH /api/checkTask/:id', () => {
     const task = await Task.create({ title: 'Task 1', status: 'active' });
 
     const res = await request(app)
-      .patch(`/api/checkTask/${task._id}`)
+      .patch(BASE_URL+`/tasks/${task._id}/check`)
       .expect(200);
 
     expect(res.body.title).toBe('Task 1');
@@ -141,7 +142,7 @@ describe('PATCH /api/checkTask/:id', () => {
   });
 });
 
-describe('PATCH /api/checkTask/:id', () => {
+describe(`PATCH ${BASE_URL}/tasks/:id/uncheck`, () => {
   afterEach(async () => {
     await Task.deleteMany();
   });
@@ -150,7 +151,7 @@ describe('PATCH /api/checkTask/:id', () => {
     const task = await Task.create({ title: 'Task 1', status: 'checked' });
 
     const res = await request(app)
-      .patch(`/api/uncheckTask/${task._id}`)
+      .patch(BASE_URL+`/tasks/${task._id}/uncheck`)
       .expect(200);
 
     expect(res.body.title).toBe('Task 1');
